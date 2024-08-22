@@ -1,10 +1,15 @@
 -- a function that divides and returns the first by the second number
-DROP FUNCTION IF EXISTS SafeDiv;
+DELIMITER //
+
+DROP FUNCTION IF EXSISTS SafeDiv;
+
 CREATE FUNCTION SafeDiv (a INT, b INT)
 RETURNS FLOAT DETERMINISTIC
 BEGIN
-	IF b = 0;
+	IF b = 0 THEN
 		RETURN NULL;
-	RETURN a / b;
+	ELSE
+		RETURN a / b;
+	END IF;
 END //
-DELIMITER;
+DELIMITER ;
