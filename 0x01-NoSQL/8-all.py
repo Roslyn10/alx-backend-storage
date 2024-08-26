@@ -14,7 +14,7 @@ def list_all(mongo_collection):
     """
     documents = mongo_collection.find()
 
-    if documents.count() == 0:
-        return []
+    """if documents.count() == 0:
+        return []"""
 
     return [document for document in documents]
