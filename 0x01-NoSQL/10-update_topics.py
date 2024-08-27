@@ -12,6 +12,10 @@ def update_topics(mongo_collection, name, topics):
         topics (list of strs): the list of topics approached in the school
 
     Returns:
+        Nothing
 
     """
+    new_value = {"name": name}
+    other_value = {"$set": {"topics" :topics}}
 
+    mongo_collection.update_many(new_value, other_value)
