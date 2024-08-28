@@ -6,7 +6,7 @@ from uuid import uuid4
 import redis
 
 
-def count_calls(Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     Counts the amount of times methods of the Cache class are called
     """
