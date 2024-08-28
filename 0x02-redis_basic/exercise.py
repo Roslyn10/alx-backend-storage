@@ -4,7 +4,7 @@
 from typing import Union, Callable, Optional
 from uuid import uuid4
 import redis
-import functools import wraps
+from functools import wraps
 
 
 def count_calls(method: Callable) -> Callable:
@@ -30,9 +30,9 @@ def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         input = str(args)
-        self.redis.rpush(method.__qualname__ + ":inputs", input)
+        self._redis.rpush(method.__qualname__ + ":inputs", input)
         output = str(method(self, *args, **kwargs))
-        self.redis.rpush(method.__quallname__ + ":outputs", output)
+        self._redis.rpush(method.__qualname__ + ":outputs", output)
         return output
     return wrapper
 
