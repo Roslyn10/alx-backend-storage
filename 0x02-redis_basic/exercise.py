@@ -44,7 +44,7 @@ class Cache:
         return val.decode("utf-8")
 
 
-    def get_in(self, key: str) -> str:
+    def get_int(self, key: str) -> str:
         """
         Parametrize Cache.get with the correct conversion function
         """
