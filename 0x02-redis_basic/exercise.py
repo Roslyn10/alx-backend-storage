@@ -36,6 +36,32 @@ def call_history(method: Callable) -> Callable:
         return output
     return wrapper
 
+def replay(fn: Callable):
+    """
+    Displays the history of calls
+    """
+    red = redis.Redis()
+    func = fn.__qualname__
+    call = red.get(func_name)
+    try:
+        call = int(call.decode("utf-8"))
+    except Exception:
+        call = 0
+    print("{} was called {} times:".format(func, call))
+    inputs = red.lrange("{}:inputs".format(func), 0, 1)
+    outputs = red.lrange("{}:outputs".format(func), 0, -1)
+    for inpu, outpu in zip(inputs, outputs):
+        try:
+            inpu = inpu.decode("utf-8)"
+        except Exception:
+            inpu = ""
+        try:
+            outpu = outpu.decode("utf-8")
+        except Exception:
+            outpu = ""
+        print("{}(*{}) -> {}".format(func, inpu, outpu))
+
+
 
 class Cache:
     """
