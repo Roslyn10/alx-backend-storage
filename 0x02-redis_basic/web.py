@@ -6,6 +6,9 @@ from functools import wraps
 import requests
 
 
+store = redis.Redis()
+
+
 def cache_page(method):
     """
     Decorator to cache the page content with an expiration time
