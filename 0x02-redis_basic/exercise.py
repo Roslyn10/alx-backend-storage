@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """A module that contains a redis class"""
 
-from typing import Union, Optional, Callable
+from typing import Union, Callable, Optional
 from uuid import uuid4
 import redis
 
