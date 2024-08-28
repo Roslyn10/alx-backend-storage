@@ -22,6 +22,7 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     """
     Returns the history of the input params to one list in redis, and stores
@@ -35,6 +36,7 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(method.__qualname__ + ":outputs", output)
         return output
     return wrapper
+
 
 def replay(fn: Callable):
     """
@@ -52,7 +54,7 @@ def replay(fn: Callable):
     outputs = red.lrange("{}:outputs".format(func), 0, -1)
     for inpu, outpu in zip(inputs, outputs):
         try:
-            inpu = inpu.decode("utf-8)"
+            inpu = inpu.decode("utf-8")
         except Exception:
             inpu = ""
         try:
@@ -60,7 +62,6 @@ def replay(fn: Callable):
         except Exception:
             outpu = ""
         print("{}(*{}) -> {}".format(func, inpu, outpu))
-
 
 
 class Cache:
@@ -81,11 +82,11 @@ class Cache:
         Stores data in the cache
         """
         randomkey = str(uuid4())
-        self._redis.set(randomkey,data)
+        self._redis.set(randomkey, data)
         return randomkey
 
-    def get(self, key :str, 
-            fn: Optional[Callable] = None) -> Union[str, bytes, int,float]:
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """
         Converts data to desired format
         """
@@ -100,7 +101,6 @@ class Cache:
         """
         val = self._redis.get(key)
         return val.decode("utf-8")
-
 
     def get_int(self, key: str) -> str:
         """
